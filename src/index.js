@@ -27,7 +27,7 @@ export default function(options){
 
   return {
     exec(Service, methodName, ...args){
-      const method = service[methodName];
+      const method = service.functions[methodName];
       if(!method){
         throw new Error(methodName + " not found in Service! please check!");
       }

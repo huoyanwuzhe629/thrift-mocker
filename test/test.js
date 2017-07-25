@@ -15,7 +15,8 @@ describe('Your tests go here!', function() {
       thriftMocker = new ThriftMocker({
         service: path.resolve(__dirname, './tutorial.thrift'),
         models: [ttypes.Work, ttypes.InvalidOperation],
-        strictMode: true
+        strictMode: true,
+        serviceName: "Calculator"
       });
       work = new ttypes.Work();
       work.op = ttypes.Operation.DIVIDE;
