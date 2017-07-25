@@ -3,21 +3,28 @@ import should from 'should';
 import ThriftMocker from '../lib/';
 import path from 'path';
 import { extend } from '../lib/utils/helper';
+import ttypes from '../gen-nodejs/tutorial_types';
+
 
 let thriftMocker;
+let work;
 
 describe('Your tests go here!', function() {
     
     beforeEach(function(){
       thriftMocker = new ThriftMocker({
-        service: path.resolve(__dirname, './service.thrift'),
-        models: [require('./service_types')],
+        service: path.resolve(__dirname, './tutorial.thrift'),
+        models: [ttypes.Work, ttypes.InvalidOperation],
         strictMode: true
       });
+      work = new ttypes.Work();
+      work.op = ttypes.Operation.DIVIDE;
+      work.num1 = 1;
+      work.num2 = 0;
     });
 
     it('check type is ok', function(done) {
-      thriftMocker.exec('Reserved argument', 'doTest', 1, '12')
+      thriftMocker.exec('Reserved argument', 'calculate', 1, work)
         .then(result => {
           should(result).be.a.Number();
           done();
@@ -27,16 +34,16 @@ describe('Your tests go here!', function() {
         });
     });
 
-    it('check i64 is ok', function(done) {
-      try {
-        thriftMocker.exec('Reserved argument', 'doTest1', '43', '12');
-      }catch(e){
-        assert(e instanceof TypeError, 'not TypeError, error happened');
-        done();
-      }
-    });
+    // it('check i64 is ok', function(done) {
+    //   try {
+    //     thriftMocker.exec('Reserved argument', 'calculate', '43', work);
+    //   }catch(e){
+    //     assert(e instanceof TypeError, 'not TypeError, error happened');
+    //     done();
+    //   }
+    // });
 
-    it('test case 2', function() {
-      assert(extend({}, {a:1}).a === 1);
-    });
+    // it('test case 2', function() {
+    //   assert(extend({}, {a:1}).a === 1);
+    // });
 });
