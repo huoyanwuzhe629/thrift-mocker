@@ -1,6 +1,6 @@
 {
   "name": "@bizfe/thrift-mocker",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Easy to mock data based on thrift, no hard code data anymore!",
   "author": {
     "name": "xiongsheng"

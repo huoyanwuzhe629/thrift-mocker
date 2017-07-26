@@ -26,7 +26,7 @@ export default function(options) {
     const service = options.serviceName ? ast.service[options.serviceName] : ast.service[services[0]];
 
     return {
-        exec(Service, methodName, ...args) {
+        exec(responseType, methodName, ...args) {
             let method = service.functions[methodName];
             let methodAst = ast;
             if (!method) {
@@ -44,10 +44,13 @@ export default function(options) {
             typecheck(args, method.args, options.models, !!options.strictMode);
             return new Promise((resolve, reject) => {
                 try {
-                    const data = generate(method.type, methodAst, {
+                    //异常的时候，抛异常的类型
+                    const type = responseType == 'exception' ? method.throws[0].type : method.type;
+                    const data = generate(type, methodAst, {
                         mockData: options.mockData && options.mockData[methodName] || {},
                         commonData: options.commonData,
-                        boundary: options.boundary
+                        boundary: options.boundary,
+                        responseType
                     });
                     if (options.cache) {
                         const cacheKey = methodName + JSON.stringify(args);

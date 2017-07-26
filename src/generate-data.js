@@ -15,7 +15,14 @@ export default function generate(type, ast, opts) {
         return result;
     }
 
-    let structItems = getStruct(type, ast).struct || [];
+    let structItems;
+
+    //返回异常的结果
+    if (opts.responseType == 'exception') {
+        structItems = getException(type, ast).exception || [];
+    } else {
+        structItems = getStruct(type, ast).struct || [];
+    }
 
     mockData = opts.mockData;
     generateBoundary = !!opts.boundary;
@@ -95,6 +102,14 @@ function getStruct(type, ast) {
             ast
         };
     }
+}
+
+function getException(type, ast) {
+
+    return {
+        exception: ast.exception[type],
+        ast
+    };
 }
 
 function extendModels(innerAst, outerAst) {
