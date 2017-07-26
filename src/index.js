@@ -16,7 +16,8 @@ export default function(options) {
     if (!fs.existsSync(options.service)) {
         throw new Error("Thrift service file not found, please check!");
     }
-    const ast = parser(options.service);
+    //继承的thrift文件位置
+    const ast = parser(options.service, options.thriftPath);
     const services = Object.keys(ast.service);
     if (services && services.length > 1 && !options.serviceName) {
         throw new Error("Service file should only contains one service! please check!");

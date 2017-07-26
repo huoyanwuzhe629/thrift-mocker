@@ -16,7 +16,8 @@ describe('Your tests go here!', function() {
             service: path.resolve(__dirname, './tutorial.thrift'),
             models: [ttypes.Work, ttypes.InvalidOperation],
             strictMode: true,
-            serviceName: "Calculator"
+            serviceName: "Calculator",
+            thriftPath: './test/'
         });
         work = new ttypes.Work();
         work.op = ttypes.Operation.DIVIDE;
