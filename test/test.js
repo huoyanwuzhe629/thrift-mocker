@@ -25,30 +25,41 @@ describe('Your tests go here!', function() {
         work.num2 = 0;
     });
 
-    // it('check type is ok', function(done) {
-    //     thriftMocker.exec('Reserved argument', 'calculate', 1, work)
-    //         .then(result => {
-    //             should(result).be.a.Number();
-    //             done();
-    //         }).catch(e => {
-    //             assert(false, 'type is not ok!');
-    //             done();
-    //         });
-    // });
+    it('check the getAst api is ok', function(done) {
+        try {
+            const ast = thriftMocker.getAst();
+            should(ast).be.a.Object();
+            done();
+        }catch(e){
+            assert(false, 'can not getAst');
+            done();
+        }
+    });
 
-    // it('check extends is ok', function(done) {
-    //     try {
-    //         thriftMocker.exec('anything', 'getStruct', 1).then(result => {
-    //             should(result).be.a.Object();
-    //             should(result.key).be.a.Number();
-    //             should(result.value).be.a.String();
-    //             done();
-    //         });
-    //     }catch(e){
-    //         assert(false, 'can not get extend function');
-    //         done();
-    //     }
-    // })
+    it('check type is ok', function(done) {
+        thriftMocker.exec('Reserved argument', 'calculate', 1, work)
+            .then(result => {
+                should(result).be.a.Number();
+                done();
+            }).catch(e => {
+                assert(false, 'type is not ok!');
+                done();
+            });
+    });
+
+    it('check extends is ok', function(done) {
+        try {
+            thriftMocker.exec('anything', 'getStruct', 1).then(result => {
+                should(result).be.a.Object();
+                should(result.key).be.a.Number();
+                should(result.value).be.a.String();
+                done();
+            });
+        }catch(e){
+            assert(false, 'can not get extend function');
+            done();
+        }
+    })
 
     it('check exception is ok', function(done) {
         try {

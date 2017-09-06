@@ -92,9 +92,12 @@ function constructorData(structItems, ast) {
 }
 
 function getStruct(type, ast) {
+    if (type.valueType) {
+        type = type.valueType;
+    }
     let ret = type.split(".");
     if (ret.length > 1) {
-        ast = ast.include[ret[0]];
+        ast = ast.include[ret[0]].ast;
         return getStruct(ret.slice(1).join("."), ast);
     } else {
         return {

@@ -65,6 +65,9 @@ export default function(options) {
                     reject(e);
                 }
             });
+        },
+        getAst() {
+            return ast;
         }
     }
 }
